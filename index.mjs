@@ -14,7 +14,7 @@ async function spin(winMarker) {
     try {
         const page = await browser.newPage();
 
-        await page.goto(url, {
+        await page.goto(URL, {
             waitUntil: 'domcontentloaded'
         });
 
@@ -22,13 +22,13 @@ async function spin(winMarker) {
         await element.click();
         await page.waitForNetworkIdle();
 
-        const spinWheel = await page.waitForSelector('.button___MLezn');
+        const spinWheel = await page.waitForSelector('.button___MLezn', {timeout: 5000});
         await spinWheel.click();
 
         await page.waitForFunction(() => {
             const result = document.querySelector('.title___fY2RP').innerHTML;
             return result.includes('поздравления');
-        }, {timeout: 25000});
+        });
         const result = await page.waitForSelector('.container___pqK9B');
         const reward = await result.$eval('.message___ou0QA', node => node.textContent)
         console.log('done', reward);
