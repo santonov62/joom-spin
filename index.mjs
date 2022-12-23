@@ -14,7 +14,7 @@ async function spin(winMarker) {
     try {
         const page = await browser.newPage();
 
-        await page.goto(url, {
+        await page.goto(URL, {
             waitUntil: 'domcontentloaded'
         });
 
@@ -22,7 +22,7 @@ async function spin(winMarker) {
         await element.click();
         await page.waitForNetworkIdle();
 
-        const spinWheel = await page.waitForSelector('.button___MLezn');
+        const spinWheel = await page.waitForSelector('.button___MLezn', {timeout: 5000});
         await spinWheel.click();
 
         await page.waitForFunction(() => {
